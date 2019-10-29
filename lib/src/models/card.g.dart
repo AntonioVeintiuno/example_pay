@@ -6,8 +6,8 @@ part of 'card.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Card _$CardFromJson(Map<String, dynamic> json) {
-  return Card(
+PayCard _$PayCardFromJson(Map<String, dynamic> json) {
+  return PayCard(
     tokenId: json['tokenId'] as String,
     creationDate: json['creationDate'] == null
       ? null
@@ -37,7 +37,7 @@ Card _$CardFromJson(Map<String, dynamic> json) {
   ..customerId = json['customerId'] as String;
 }
 
-Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
+Map<String, dynamic> _$PayCardToJson(PayCard instance) => <String, dynamic>{
       'id': instance.id,
       'tokenId': instance.tokenId,
       'creationDate': instance.creationDate?.toIso8601String(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:example_pay/src/models/card.dart';
 
 class CardForm extends StatefulWidget {
   @override
@@ -8,12 +9,15 @@ class CardForm extends StatefulWidget {
 
 class _CardFormState extends State<CardForm> {
   final _cardFormKey = GlobalKey<FormState>();
+  PayCard card = new PayCard();
 
-   void onSubmited() async {
+  void onSubmited() async {
     // First validate form.
-    if (this._cardFormKey.currentState.validate())  {
+    if (this._cardFormKey.currentState.validate()) {
       _cardFormKey.currentState.save(); // Save our form now.
 
+      print('qlq');
+      print(card.toJson());
       // Map res = await userProvider.login(user.email, user.password);
       // if (res['ok']) {
       //   // view code response here
@@ -38,38 +42,42 @@ class _CardFormState extends State<CardForm> {
                   height: 20,
                 ),
                 TextFormField(
-                  inputFormatters: [ LengthLimitingTextInputFormatter(16)],
-                  cursorColor: Colors.green,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(bottom: 0, top: 7.0),
-                    labelText: "Número",
-                    hintStyle: TextStyle(color: Colors.white, fontSize: 12.0),
-                    labelStyle: TextStyle(color: Colors.white),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.yellowAccent[100])),
-                  ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Inserte los datos correspondientes';
-                    }
-                    return null;
-                  },
-                ),
+                    inputFormatters: [LengthLimitingTextInputFormatter(16)],
+                    cursorColor: Colors.green,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(bottom: 0, top: 7.0),
+                      labelText: "Número",
+                      hintStyle: TextStyle(color: Colors.white, fontSize: 12.0),
+                      labelStyle: TextStyle(color: Colors.white),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              new BorderSide(color: Colors.yellowAccent[100])),
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Inserte los datos correspondientes';
+                      }
+                      return null;
+                    },
+                    onSaved: (String value) {
+                      this.card.cardNumber = value;
+                    }),
                 SizedBox(height: 30),
                 Row(
                   children: <Widget>[
                     SizedBox(
-                      width: MediaQuery.of(context).size.width - 250,
+                      width: MediaQuery.of(context).size.width - 320,
                       child: TextFormField(
                         cursorColor: Colors.green,
-                        inputFormatters: [ LengthLimitingTextInputFormatter(2)],
+                        inputFormatters: [LengthLimitingTextInputFormatter(2)],
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(bottom: 0, top: 7.0),
                           hintText: "Mes",
                           labelText: "Mes",
                           labelStyle: TextStyle(color: Colors.white),
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.yellowAccent[100])),
+                              borderSide: new BorderSide(
+                                  color: Colors.yellowAccent[100])),
                         ),
                         validator: (value) {
                           if (value.isEmpty) {
@@ -77,30 +85,68 @@ class _CardFormState extends State<CardForm> {
                           }
                           return null;
                         },
+                        onSaved: (String value) {
+                          this.card.expirationMonth = value;
+                        },
                       ),
                     ),
                     SizedBox(
                       width: 30,
                     ),
                     SizedBox(
-                      width:  MediaQuery.of(context).size.width - 250,
+                      width: MediaQuery.of(context).size.width - 320,
                       child: TextFormField(
-                        inputFormatters: [ LengthLimitingTextInputFormatter(2)],
+                        inputFormatters: [LengthLimitingTextInputFormatter(2)],
                         cursorColor: Colors.green,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(bottom: 0, top: 7.0),
                           labelText: "Año",
-                          hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
+                          hintStyle:
+                              TextStyle(color: Colors.grey, fontSize: 12.0),
                           labelStyle: TextStyle(color: Colors.white),
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.yellowAccent[100])),
+                              borderSide: new BorderSide(
+                                  color: Colors.yellowAccent[100])),
                         ),
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Inserte los mdatos correspondientes';
                           }
                           return null;
+                        },
+                        onSaved: (String value) {
+                          this.card.expirationYear = value;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 30,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 330,
+                      child: TextFormField(
+                        inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                        cursorColor: Colors.green,
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 0, top: 7.0),
+                          labelText: "CVV",
+                          hintStyle:
+                              TextStyle(color: Colors.grey, fontSize: 12.0),
+                          labelStyle: TextStyle(color: Colors.white),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: new BorderSide(
+                                  color: Colors.yellowAccent[100])),
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Inserte los mdatos correspondientes';
+                          }
+                          return null;
+                        },
+                        onSaved: (String value) {
+                          this.card.cvv2 = value;
                         },
                       ),
                     ),
@@ -116,7 +162,8 @@ class _CardFormState extends State<CardForm> {
                     hintStyle: TextStyle(color: Colors.white, fontSize: 12.0),
                     labelStyle: TextStyle(color: Colors.white),
                     focusedBorder: UnderlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.yellowAccent[100])),
+                        borderSide:
+                            new BorderSide(color: Colors.yellowAccent[100])),
                   ),
                   validator: (value) {
                     if (value.isEmpty) {
@@ -124,22 +171,27 @@ class _CardFormState extends State<CardForm> {
                     }
                     return null;
                   },
+                  onSaved: (String value) {
+                    this.card.holderName = value;
+                  },
                 ),
                 SizedBox(height: 200),
                 SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width-40,
-                  child: RaisedButton(
-                    onPressed: onSubmited,
-                  color: Colors.grey,
-                  child: Text('Guardar',
-                    style: TextStyle(fontSize: 14, color: Colors.white, fontFamily: "Poppins-Medium" ),
-                  ))
-                )
+                    height: 40,
+                    width: MediaQuery.of(context).size.width - 40,
+                    child: RaisedButton(
+                        onPressed: onSubmited,
+                        color: Colors.grey,
+                        child: Text(
+                          'Guardar',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontFamily: "Poppins-Medium"),
+                        )))
               ],
             )
           ]),
-      )
-    );
+        ));
   }
 }

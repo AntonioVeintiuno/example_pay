@@ -7,7 +7,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'card.g.dart';
 
 @JsonSerializable(nullable: true)
-class Card extends OpenPayBaseModel {
+class PayCard extends OpenPayBaseModel {
   String tokenId;
   @JsonKey(nullable: true)
   DateTime creationDate;
@@ -29,7 +29,7 @@ class Card extends OpenPayBaseModel {
   Affiliation affiliation;
   String customerId;
 
-  Card({ this.tokenId,
+  PayCard({ this.tokenId,
     this.creationDate,
     this.bankName,
     this.allowsPayouts,
@@ -49,8 +49,8 @@ class Card extends OpenPayBaseModel {
     this.affiliation
   });
 
-  factory Card.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);
+  factory PayCard.fromJson(Map<String, dynamic> json) => _$PayCardFromJson(json);
 
-  Card fromJson(Map<String, dynamic> json) => _$CardFromJson(json);
-  Map<String, dynamic> toJson() => _$CardToJson(this);
+  PayCard fromJson(Map<String, dynamic> json) => _$PayCardFromJson(json);
+  Map<String, dynamic> toJson() => _$PayCardToJson(this);
 }
