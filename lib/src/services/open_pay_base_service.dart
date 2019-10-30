@@ -1,9 +1,7 @@
 import 'package:example_pay/src/models/open_pay_base_model.dart';
 import 'package:example_pay/src/utils/openpay_client.dart';
 
-abstract class OpenPayBaseService<T extends OpenPayBaseModel,R extends OpenPayBaseModel>
-{
-
+abstract class OpenPayBaseService<T extends OpenPayBaseModel,R extends OpenPayBaseModel>{
   OpenPayClient _httpClient;
   OpenPayClient get httpClient => _httpClient;
   String get resourceName;
@@ -12,7 +10,6 @@ abstract class OpenPayBaseService<T extends OpenPayBaseModel,R extends OpenPayBa
   OpenPayBaseService(this._httpClient);
 
   String getEndpoint({String reference = null, String endpoint = null}){
-
     if (endpoint!=null) return endpoint;
 
     String url= "";
@@ -24,23 +21,16 @@ abstract class OpenPayBaseService<T extends OpenPayBaseModel,R extends OpenPayBa
     return url;
   }
 
-
-Future<T> submit(T out, R entity,{String endpoint = null,String reference = null}) async {
+  Future<T> submit(T out, R entity,{String endpoint = null,String reference = null}) async {
     endpoint = getEndpoint(endpoint:endpoint, reference:reference);
     var response = await _httpClient.post(endpoint, entity);
     return Future<T>.value(out.fromJson(response) as T);
-
-
-
   }
 
   Future<T> create(R entity,{String endpoint = null}) async {
     endpoint = getEndpoint(endpoint:endpoint);
     var response = await _httpClient.post(endpoint, entity);
     return Future<T>.value(entity.fromJson(response) as T);
-
-
-
   }
 
   Future<T> update(R entity,{String endpoint = null}) async {
@@ -72,10 +62,5 @@ Future<T> submit(T out, R entity,{String endpoint = null,String reference = null
     var result = response.map((f) => type.fromJson(f) as T).toList();
     return result;
   }
-
-
-
-
-
 
 }

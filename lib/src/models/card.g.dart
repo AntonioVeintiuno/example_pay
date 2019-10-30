@@ -10,16 +10,16 @@ PayCard _$PayCardFromJson(Map<String, dynamic> json) {
   return PayCard(
     tokenId: json['tokenId'] as String,
     creationDate: json['creationDate'] == null
-      ? null
-      : DateTime.parse(json['creationDate'] as String),
+        ? null
+        : DateTime.parse(json['creationDate'] as String),
     bankName: json['bankName'] as String,
     allowsPayouts: json['allowsPayouts'] as bool,
     holderName: json['holderName'] as String,
     expirationMonth: json['expirationMonth'] as String,
     expirationYear: json['expirationYear'] as String,
     address: json['address'] == null
-      ? null
-      : Address.fromJson(json['address'] as Map<String, dynamic>),
+        ? null
+        : Address.fromJson(json['address'] as Map<String, dynamic>),
     cardNumber: json['cardNumber'] as String,
     brand: json['brand'] as String,
     allowsCharges: json['allowsCharges'] as bool,
@@ -30,11 +30,11 @@ PayCard _$PayCardFromJson(Map<String, dynamic> json) {
     pointsCard: json['pointsCard'] as bool,
     pointsType: json['pointsType'] as String,
     affiliation: json['affiliation'] == null
-      ? null
-      : Affiliation.fromJson(json['affiliation'] as Map<String, dynamic>),
+        ? null
+        : Affiliation.fromJson(json['affiliation'] as Map<String, dynamic>),
   )
-  ..id = json['id'] as String
-  ..customerId = json['customerId'] as String;
+    ..id = json['id'] as String
+    ..customerId = json['customerId'] as String;
 }
 
 Map<String, dynamic> _$PayCardToJson(PayCard instance) => <String, dynamic>{

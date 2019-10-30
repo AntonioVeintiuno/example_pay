@@ -19,18 +19,18 @@ class OpenPayClient {
       _apiendpoint = _production_url;
     else
       _apiendpoint = _sandbox_url;
-    _timeoutSeconds = 120;
+      _timeoutSeconds = 120;
 
-    // Aqui se hace el encode para la llave privada que se envia en el header
+    // Here is the encode for the private key that is sent in the header
     var bytes = utf8.encode("$_privateKey:");
     var base64Str = base64.encode(bytes);
-    // Aqui se hace la peticion a la api de openpay con la libreria Dio que es para consumo de apis
-    // Se puede apreciar donde se envia el header basic para la authentificacion
+    // Here is the petition to the openpay api with the Dio bookstore which is for apis consumption.
+    // Can be seen where the header basic is sent for authentication
     _httpClient = Dio(BaseOptions(
-        baseUrl: _apiendpoint,
-        connectTimeout: _timeoutSeconds * 1000,
-        receiveTimeout: _timeoutSeconds * 1000,
-        headers: {"Authorization": "Basic $base64Str"}));
+      baseUrl: _apiendpoint,
+      connectTimeout: _timeoutSeconds * 1000,
+      receiveTimeout: _timeoutSeconds * 1000,
+      headers: {"Authorization": "Basic $base64Str"}));
   }
 
   String get apiMerchandId => _merchantId;
@@ -42,8 +42,7 @@ class OpenPayClient {
     Map<String, dynamic> jsonResponse;
 
     try {
-      response =
-          await _httpClient.post(_apiendpoint + endpoint, data: data.toJson(),);
+      response = await _httpClient.post(_apiendpoint + endpoint, data: data.toJson(),);
     } catch (ex) {
       _handleWebException(ex, endpoint, "POST");
     }
