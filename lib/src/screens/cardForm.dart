@@ -1,3 +1,7 @@
+// import 'package:example_pay/src/services/customer_service.dart';
+import 'package:example_pay/src/utils/openpay_client.dart';
+import 'package:example_pay/src/utils/openpay_flutter.dart';
+// import 'package:example_pay/src/utils/openpay_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:example_pay/src/models/card.dart';
@@ -10,20 +14,19 @@ class CardForm extends StatefulWidget {
 class _CardFormState extends State<CardForm> {
   final _cardFormKey = GlobalKey<FormState>();
   PayCard card = new PayCard();
+  // static OpenPayClient get httpClient => httpClient;
+  OpenpayAPI openpayAPI = OpenpayAPI('mzay3lssyozn90n0ebgy', 'sk_fd4c575505544177b7ffb42663b4cb62');
+  // CustomerService customerService = CustomerService(openPay);
 
   void onSubmited() async {
     // First validate form.
     if (this._cardFormKey.currentState.validate()) {
       _cardFormKey.currentState.save(); // Save our form now.
-
       print('qlq');
       print(card.toJson());
-      // Map res = await userProvider.login(user.email, user.password);
-      // if (res['ok']) {
-      //   // view code response here
-      // } else {
-
-      // }
+      // azcoo4so9mrv61gra2fi
+     openpayAPI.cardService.createCard(card);
+      print('le reees here');
     }
   }
 
@@ -173,6 +176,23 @@ class _CardFormState extends State<CardForm> {
                   },
                   onSaved: (String value) {
                     this.card.holderName = value;
+                  },
+                ),
+                SizedBox(height: 30),
+                TextFormField(
+                  cursorColor: Colors.green,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(bottom: 0, top: 7.0),
+                    labelText: "Customer id",
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 12.0),
+                    labelStyle: TextStyle(color: Colors.white),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide:
+                            new BorderSide(color: Colors.yellowAccent[100])),
+                  ),
+                  onSaved: (String value) {
+                    this.card.customerId = value;
                   },
                 ),
                 SizedBox(height: 200),

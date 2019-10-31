@@ -12,7 +12,7 @@ class CustomerService extends OpenPayBaseService<Customer,Customer> {
 
   // Future<Customer> createCustomer(Customer entity, {String endpoint = null})  {
   //   endpoint = getEndpoint();
-  //   endpoint+="/cards";
+  //   endpoint+="customers";
   //   return create(entity, endpoint:endpoint);
   // }
 }
