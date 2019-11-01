@@ -1,7 +1,4 @@
-// import 'package:example_pay/src/services/customer_service.dart';
-import 'package:example_pay/src/utils/openpay_client.dart';
 import 'package:example_pay/src/utils/openpay_flutter.dart';
-// import 'package:example_pay/src/utils/openpay_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:example_pay/src/models/card.dart';
@@ -12,11 +9,32 @@ class CardForm extends StatefulWidget {
 }
 
 class _CardFormState extends State<CardForm> {
+  static const platform = const MethodChannel('openpay.flutter/open_pay');
   final _cardFormKey = GlobalKey<FormState>();
   PayCard card = new PayCard();
   // static OpenPayClient get httpClient => httpClient;
   OpenpayAPI openpayAPI = OpenpayAPI('mzay3lssyozn90n0ebgy', 'sk_fd4c575505544177b7ffb42663b4cb62');
   // CustomerService customerService = CustomerService(openPay);
+
+   // Get battery level.
+  String _deviceSessionId = 'Unknown device_id.';
+
+  Future<void> getDeviceSessionId(String merchantId, String privateKey) async {
+    String deviceSessionId;
+    try {
+      final int result = await platform.invokeMethod('getDeviceSessionId', <String, dynamic>{
+        '_merchantId': merchantId,
+        '_privateKey': privateKey,
+      });
+      deviceSessionId = 'Session id $result .';
+    } on PlatformException catch (e) {
+      deviceSessionId = "Failed to get Session level: '${e.message}'.";
+    }
+
+    setState(() {
+      _deviceSessionId = deviceSessionId;
+    });
+  }
 
   void onSubmited() async {
     // First validate form.
@@ -24,9 +42,11 @@ class _CardFormState extends State<CardForm> {
       _cardFormKey.currentState.save(); // Save our form now.
       print('qlq');
       print(card.toJson());
+
       // azcoo4so9mrv61gra2fi
-     openpayAPI.cardService.createCard(card);
-      print('le reees here');
+      // openpayAPI.cardService.createCard(card);
+      print('le deviseID');
+      print(_deviceSessionId);
     }
   }
 

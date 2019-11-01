@@ -26,6 +26,7 @@ class _CustomerFormState extends State<CustomerForm> {
       print('qlq');
       // customerService
       openpayAPI.customerService.create(customer);
+      // OpenpayAPI.deviceSessionId('mzay3lssyozn90n0ebgy', 'sk_fd4c575505544177b7ffb42663b4cb62');
       print('res');
     }
   }
